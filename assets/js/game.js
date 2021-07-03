@@ -1,12 +1,9 @@
-//console.log(enemy.names);
-//console.log(enemy.names.length);
-//console.log(enemy.names[0]);
-//console.log(enemy.names[3]);
 
-//prints 100
-console.log(Math.max(10,20,100));
-//prints 0
-console.log(Math.max(0, -50));
+var randomNumber = function(min, max) {
+  var value = Math.floor(Math.random() * (max - min + 1) + min);
+
+  return value;
+};
 
 // fight function (now with parameter for enemy's name)
 var fight = function(enemy) {
@@ -31,8 +28,8 @@ var fight = function(enemy) {
 
     // remove enemy's health by subtracting the amount set in the playerInfo.attack variable
     var damage = randomNumber(playerInfo.attack -3, playerInfo.attack);
-    enemy.health = Math.max(0, enemy.health - damage);
 
+    enemy.health = Math.max(0, enemy.health - damage);
     console.log(
       playerInfo.name + ' attacked ' + enemy.name + '. ' + enemy.name + ' now has ' + enemy.health + ' health remaining.'
     );
@@ -73,6 +70,7 @@ var fight = function(enemy) {
 var startGame = function(){
   //reset player stats
   playerInfo.reset();
+
   // fight each enemy-robot by looping over them and fighting them one at a time
   for (var i = 0; i < enemyInfo.length; i++) {
     // if player is still alive, keep fighting
@@ -85,9 +83,6 @@ var startGame = function(){
   
       // reset enemy.health before starting new fight
       pickedEnemyObj.health = randomNumber(40, 60);
-  
-      // use debugger to pause script from running and check what's going on at that moment in the code
-      // debugger;
   
       // pass the pickedenemy.name variable's value into the fight function, where it will assume the value of the enemy.name parameter
       fight(pickedEnemyObj);
@@ -111,7 +106,8 @@ var startGame = function(){
 
   // after loop ends, we are either out of playerInfo.health or enemies to fight, so run the endGame function
   endGame();
-}
+};
+
 //function to end the entire game 
 var endGame = function () {
   //if the player is still alive, player wins!
@@ -128,8 +124,7 @@ var endGame = function () {
   if (playerAgainConfirm) {
     //restart the game
     startGame();
-  }
-  else {
+  } else {
     window.alert("Thank you for playing Robot Gladiators! Come back soon!");
   }
 };
@@ -165,16 +160,24 @@ var shop = function() {
       break;
   }
 };
-var randomNumber = function(min, max) {
-  var value = Math.floor(Math.random() * (max - min + 1) + min);
+//function to set name 
+var getPlayerName = function() {
+  var name = "";
 
-  return value;
-};
+  while (name === "" || name === null) {
+    name = prompt("What is your robot's name?");
+  }
+
+  console.log("Your robot's name is " + name);
+  return name;
+}
+
 var playerInfo = {
   name: window.prompt("What's your robot's name?"),
   health: 100,
   attack: 10,
   money: 10,
+  name: getPlayerName(),
   reset: function() {
     this.health = 100;
     this.money = 10;
@@ -216,6 +219,13 @@ var enemyInfo = [
     attack: randomNumber(10, 14)
   }
 ];
+
+console.log(enemyInfo);
+console.log(enemyInfo[0]);
+console.log(enemyInfo[0].name);
+console.log(enemyInfo[0]['attack']);
+//End game information/ variables
+
 //play again
 startGame();
 
